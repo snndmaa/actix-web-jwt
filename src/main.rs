@@ -10,6 +10,14 @@ use actix_web::{http, App, HttpServer};
 use futures::FutureExt;
 
 mod config;
+mod api;
+mod constants;
+mod error;
+mod models;
+mod services;
+mod utils;
+mod schema;
+mod middleware;
 
 #[actix_rt::main]
 async fn main() -> io::Result<()> {
@@ -39,9 +47,9 @@ async fn main() -> io::Result<()> {
             )
             .app_data(web::Data::new(pool.clone()))
             .wrap(actix_web::middleware::Logger::default())
-            // .wrap(crate::middleware::auth_middleware::Authentication) // Comment this line if you want to integrate with yew-address-book-frontend
+            .wrap(crate::middleware::auth_middleware::Authentication) // Comment this line if you want to integrate with yew-address-book-frontend
             // .wrap_fn(|req, srv| srv.call(req).map(|res| res))
-            // .configure(config::app::config_services)
+            .configure(config::app::config_services)
     })
     .bind(&app_url)?
     .run()

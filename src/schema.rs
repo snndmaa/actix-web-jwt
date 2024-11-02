@@ -3,7 +3,7 @@
 diesel::table! {
     login_history (id) {
         id -> Int4,
-        user_id -> Int8,
+        user_id -> Int4,
         login_timestamp -> Timestamptz,
     }
 }
