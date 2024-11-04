@@ -1,5 +1,5 @@
-use actix_web::{web, HttpRequest, HttpResponse};
-
+use actix_web::{web, HttpRequest, HttpResponse, post, get};
+// use utoipa::path;
 use crate::{
     config::db::Pool,
     constants,
@@ -12,6 +12,17 @@ use crate::{
 };
 
 // POST api/auth/signup
+#[utoipa::path(
+    post,
+    tag = "users",
+    path = "/api/auth/signup",
+    request_body = UserDTO,
+    responses(
+        (status = 201, description = "User created successfully", body = UserDTO),
+        (status = 400, description = "Invalid user data"),
+    )
+)]
+#[post("/signup")]
 pub async fn signup(
     user_dto: web::Json<UserDTO>,
     pool: web::Data<Pool>,

@@ -2,6 +2,7 @@ use bcrypt::{hash, verify, DEFAULT_COST};
 use diesel::{prelude::*, Identifiable, Insertable, Queryable};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
+use utoipa::ToSchema;
 
 use crate::{
     config::db::Connection,
@@ -19,7 +20,7 @@ pub struct User {
     pub login_session: String,
 }
 
-#[derive(Insertable, Serialize, Deserialize)]
+#[derive(Insertable, Serialize, Deserialize, ToSchema)]
 #[diesel(table_name = users)]
 pub struct UserDTO {
     pub username: String,
